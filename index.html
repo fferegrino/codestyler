@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Code Styler</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .input-section {
+            margin-bottom: 20px;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 200px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 14px;
+            resize: vertical;
+            transition: border-color 0.3s;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            flex: 1;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #4caf50;
+            color: white;
+            flex: 1;
+        }
+
+        .btn-secondary:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+        }
+
+        .btn-secondary:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .output-section {
+            display: none;
+        }
+
+        .output-section.active {
+            display: block;
+        }
+
+        .output-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .output-header h2 {
+            color: #333;
+            font-size: 1.5em;
+        }
+
+        #highlightedCode {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            max-height: 500px;
+            overflow: auto;
+            background: #2d2d2d;
+        }
+
+        /* Override Prism styles to ensure proper copying */
+        pre[class*="language-"] {
+            margin: 0;
+            padding: 20px !important;
+            background: #2d2d2d !important;
+        }
+
+        code[class*="language-"] {
+            background: transparent !important;
+        }
+
+        .instructions {
+            background: #f0f7ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+
+        .instructions h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .instructions ul {
+            margin-left: 20px;
+            color: #555;
+        }
+
+        .instructions li {
+            margin: 5px 0;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4caf50;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transform: translateX(400px);
+            transition: transform 0.3s;
+            z-index: 1000;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🐍 Python Code Styler</h1>
+        
+        <div class="card">
+            <div class="input-section">
+                <h2 style="margin-bottom: 15px; color: #333;">Paste Your Python Code</h2>
+                <textarea id="codeInput" placeholder="# Paste your Python code here...
+
+def hello_world():
+    print('Hello, World!')
+    
+if __name__ == '__main__':
+    hello_world()"></textarea>
+                <div class="button-group">
+                    <button class="btn-primary" onclick="highlightCode()">✨ Highlight Code</button>
+                    <button class="btn-secondary" id="copyBtn" onclick="copyCode()" disabled>📋 Copy Highlighted Code</button>
+                </div>
+            </div>
+
+            <div class="output-section" id="outputSection">
+                <div class="output-header">
+                    <h2>Highlighted Code</h2>
+                </div>
+                <div id="highlightedCode"></div>
+                
+                <div class="instructions">
+                    <h3>How to copy with colors:</h3>
+                    <ul>
+                        <li><strong>Method 1:</strong> Click the "Copy Highlighted Code" button above, then paste into Word/PowerPoint</li>
+                        <li><strong>Method 2:</strong> Select all the highlighted code below (Ctrl+A / Cmd+A), copy (Ctrl+C / Cmd+C), and paste into your document</li>
+                        <li>The syntax colors will be preserved in Word, PowerPoint, and other rich text editors!</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="notification" id="notification">
+        ✓ Code copied to clipboard!
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script>
+        function highlightCode() {
+            const code = document.getElementById('codeInput').value;
+            
+            if (!code.trim()) {
+                alert('Please enter some Python code first!');
+                return;
+            }
+
+            const outputSection = document.getElementById('outputSection');
+            const highlightedCode = document.getElementById('highlightedCode');
+            const copyBtn = document.getElementById('copyBtn');
+
+            // Create the highlighted code
+            const highlighted = Prism.highlight(code, Prism.languages.python, 'python');
+            
+            // Wrap in pre and code tags with inline styles for better copying
+            highlightedCode.innerHTML = `<pre class="language-python"><code class="language-python">${highlighted}</code></pre>`;
+
+            // Show output section and enable copy button
+            outputSection.classList.add('active');
+            copyBtn.disabled = false;
+
+            // Scroll to output
+            outputSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        async function copyCode() {
+            const highlightedDiv = document.getElementById('highlightedCode');
+            const pre = highlightedDiv.querySelector('pre');
+            
+            try {
+                // Create a range and selection
+                const range = document.createRange();
+                range.selectNodeContents(pre);
+                const selection = window.getSelection();
+                selection.removeAllRanges();
+                selection.addRange(range);
+
+                // Get the HTML content with computed styles
+                const htmlContent = pre.outerHTML;
+                
+                // Copy both HTML and plain text to clipboard
+                const blob = new Blob([htmlContent], { type: 'text/html' });
+                const plainText = pre.textContent;
+                
+                // Use the modern clipboard API
+                await navigator.clipboard.write([
+                    new ClipboardItem({
+                        'text/html': blob,
+                        'text/plain': new Blob([plainText], { type: 'text/plain' })
+                    })
+                ]);
+
+                // Show notification
+                showNotification();
+
+                // Clear selection after a short delay
+                setTimeout(() => {
+                    selection.removeAllRanges();
+                }, 100);
+
+            } catch (err) {
+                // Fallback to execCommand if clipboard API fails
+                try {
+                    document.execCommand('copy');
+                    showNotification();
+                    window.getSelection().removeAllRanges();
+                } catch (err2) {
+                    alert('Copy failed. Please select the code manually and use Ctrl+C / Cmd+C');
+                }
+            }
+        }
+
+        function showNotification() {
+            const notification = document.getElementById('notification');
+            notification.classList.add('show');
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 2000);
+        }
+
+        // Allow pressing Enter with Ctrl/Cmd to highlight
+        document.getElementById('codeInput').addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                highlightCode();
+            }
+        });
+    </script>
+</body>
+</html>
+
