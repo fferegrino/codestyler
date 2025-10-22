@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Python Code Styler</title>
+    <title>Code Styler - Syntax Highlighter</title>
     <link rel="stylesheet" id="prismTheme" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
     <style>
         * {
@@ -183,13 +183,27 @@
             transform: translateX(0);
         }
 
-        .theme-selector {
+        .selectors-section {
             margin-bottom: 20px;
             padding-bottom: 20px;
             border-bottom: 2px solid #e0e0e0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
         }
 
-        .theme-selector label {
+        @media (max-width: 768px) {
+            .selectors-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .selector-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .selector-group label {
             display: block;
             color: #333;
             font-weight: 600;
@@ -225,32 +239,57 @@
 </head>
 <body>
     <div class="container">
-        <h1>🐍 Python Code Styler</h1>
+        <h1>💻 Code Styler</h1>
         
         <div class="card">
             <div class="input-section">
-                <div class="theme-selector">
-                    <label for="themeSelect">🎨 Choose Color Theme:</label>
-                    <select id="themeSelect" onchange="changeTheme()">
-                        <option value="prism-tomorrow">Tomorrow Night (Dark)</option>
-                        <option value="prism-okaidia">Okaidia (Dark)</option>
-                        <option value="prism-twilight">Twilight (Dark)</option>
-                        <option value="prism-dark">Dark</option>
-                        <option value="prism-funky">Funky</option>
-                        <option value="prism-coy">Coy (Light)</option>
-                        <option value="prism-solarizedlight">Solarized Light</option>
-                        <option value="prism">Default (Light)</option>
-                    </select>
+                <div class="selectors-section">
+                    <div class="selector-group">
+                        <label for="languageSelect">📝 Programming Language:</label>
+                        <select id="languageSelect" onchange="changeLanguage()">
+                            <option value="python">Python</option>
+                            <option value="javascript">JavaScript</option>
+                            <option value="typescript">TypeScript</option>
+                            <option value="java">Java</option>
+                            <option value="csharp">C#</option>
+                            <option value="cpp">C++</option>
+                            <option value="c">C</option>
+                            <option value="php">PHP</option>
+                            <option value="ruby">Ruby</option>
+                            <option value="go">Go</option>
+                            <option value="rust">Rust</option>
+                            <option value="swift">Swift</option>
+                            <option value="kotlin">Kotlin</option>
+                            <option value="sql">SQL</option>
+                            <option value="bash">Bash</option>
+                            <option value="powershell">PowerShell</option>
+                            <option value="r">R</option>
+                            <option value="matlab">MATLAB</option>
+                            <option value="css">CSS</option>
+                            <option value="html">HTML</option>
+                            <option value="json">JSON</option>
+                            <option value="yaml">YAML</option>
+                            <option value="markdown">Markdown</option>
+                        </select>
+                    </div>
+                    
+                    <div class="selector-group">
+                        <label for="themeSelect">🎨 Color Theme:</label>
+                        <select id="themeSelect" onchange="changeTheme()">
+                            <option value="prism-tomorrow">Tomorrow Night (Dark)</option>
+                            <option value="prism-okaidia">Okaidia (Dark)</option>
+                            <option value="prism-twilight">Twilight (Dark)</option>
+                            <option value="prism-dark">Dark</option>
+                            <option value="prism-funky">Funky</option>
+                            <option value="prism-coy">Coy (Light)</option>
+                            <option value="prism-solarizedlight">Solarized Light</option>
+                            <option value="prism">Default (Light)</option>
+                        </select>
+                    </div>
                 </div>
                 
-                <h2 class="section-title">Paste Your Python Code</h2>
-                <textarea id="codeInput" placeholder="# Paste your Python code here...
-
-def hello_world():
-    print('Hello, World!')
-    
-if __name__ == '__main__':
-    hello_world()"></textarea>
+                <h2 class="section-title">Paste Your Code</h2>
+                <textarea id="codeInput" placeholder="# Paste your code here..."></textarea>
                 <div class="button-group">
                     <button class="btn-primary" onclick="highlightCode()">✨ Highlight Code</button>
                     <button class="btn-secondary" id="copyBtn" onclick="copyCode()" disabled>📋 Copy Highlighted Code</button>
@@ -269,6 +308,7 @@ if __name__ == '__main__':
                         <li><strong>Method 1:</strong> Click the "Copy Highlighted Code" button above, then paste into Word/PowerPoint</li>
                         <li><strong>Method 2:</strong> Select all the highlighted code below (Ctrl+A / Cmd+A), copy (Ctrl+C / Cmd+C), and paste into your document</li>
                         <li>The syntax colors will be preserved in Word, PowerPoint, and other rich text editors!</li>
+                        <li>💡 <strong>Tip:</strong> Switch languages or themes anytime to re-highlight your code!</li>
                     </ul>
                 </div>
             </div>
@@ -280,7 +320,11 @@ if __name__ == '__main__':
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script>
+        // Configure Prism autoloader
+        Prism.plugins.autoloader.languages_path = 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/';
+    </script>
     <script>
         function changeTheme() {
             const themeSelect = document.getElementById('themeSelect');
@@ -301,12 +345,31 @@ if __name__ == '__main__':
             localStorage.setItem('preferredTheme', selectedTheme);
         }
 
-        // Load saved theme preference on page load
+        function changeLanguage() {
+            const languageSelect = document.getElementById('languageSelect');
+            const selectedLanguage = languageSelect.value;
+            
+            // If code is already highlighted, re-highlight it with the new language
+            const outputSection = document.getElementById('outputSection');
+            if (outputSection.classList.contains('active')) {
+                highlightCode();
+            }
+            
+            // Save language preference to localStorage
+            localStorage.setItem('preferredLanguage', selectedLanguage);
+        }
+
+        // Load saved preferences on page load
         window.addEventListener('DOMContentLoaded', function() {
             const savedTheme = localStorage.getItem('preferredTheme');
             if (savedTheme) {
                 document.getElementById('themeSelect').value = savedTheme;
                 changeTheme();
+            }
+            
+            const savedLanguage = localStorage.getItem('preferredLanguage');
+            if (savedLanguage) {
+                document.getElementById('languageSelect').value = savedLanguage;
             }
         });
 
@@ -314,26 +377,43 @@ if __name__ == '__main__':
             const code = document.getElementById('codeInput').value;
             
             if (!code.trim()) {
-                alert('Please enter some Python code first!');
+                alert('Please enter some code first!');
                 return;
             }
 
             const outputSection = document.getElementById('outputSection');
             const highlightedCode = document.getElementById('highlightedCode');
             const copyBtn = document.getElementById('copyBtn');
+            const languageSelect = document.getElementById('languageSelect');
+            const selectedLanguage = languageSelect.value;
 
-            // Create the highlighted code
-            const highlighted = Prism.highlight(code, Prism.languages.python, 'python');
-            
-            // Wrap in pre and code tags with inline styles for better copying
-            highlightedCode.innerHTML = `<pre class="language-python"><code class="language-python">${highlighted}</code></pre>`;
+            // Get the language grammar (load it if not available)
+            if (!Prism.languages[selectedLanguage]) {
+                // Show a loading message briefly
+                highlightedCode.innerHTML = '<div style="padding: 20px; color: #667eea;">Loading language support...</div>';
+                
+                // Load the language and then highlight
+                Prism.plugins.autoloader.loadLanguages([selectedLanguage], function() {
+                    performHighlight(code, selectedLanguage);
+                });
+            } else {
+                performHighlight(code, selectedLanguage);
+            }
 
-            // Show output section and enable copy button
-            outputSection.classList.add('active');
-            copyBtn.disabled = false;
+            function performHighlight(code, language) {
+                // Create the highlighted code
+                const highlighted = Prism.highlight(code, Prism.languages[language] || Prism.languages.plain, language);
+                
+                // Wrap in pre and code tags with inline styles for better copying
+                highlightedCode.innerHTML = `<pre class="language-${language}"><code class="language-${language}">${highlighted}</code></pre>`;
 
-            // Scroll to output
-            outputSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                // Show output section and enable copy button
+                outputSection.classList.add('active');
+                copyBtn.disabled = false;
+
+                // Scroll to output
+                outputSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
         }
 
         async function copyCode() {
