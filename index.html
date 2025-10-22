@@ -106,6 +106,69 @@
             transform: none;
         }
 
+        .btn-select {
+            background: #ff6b6b;
+            color: white;
+            flex: 0.7;
+        }
+
+        .btn-select:hover {
+            background: #ff5252;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-select:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Tooltip styles */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px 12px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+
+        .tooltip .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #333 transparent transparent transparent;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .tooltip:disabled .tooltiptext {
+            visibility: hidden;
+        }
+
         .output-section {
             display: none;
         }
@@ -386,7 +449,11 @@
                 <textarea id="codeInput" placeholder="# Paste your code here..."></textarea>
                 <div class="button-group">
                     <button class="btn-primary" onclick="highlightCode()">✨ Highlight Code</button>
-                    <button class="btn-secondary" id="copyBtn" onclick="copyCode()" disabled>📋 Copy Highlighted Code</button>
+                    <button class="btn-select" id="selectBtn" onclick="selectCode()" disabled>🎯 Select All</button>
+                    <div class="tooltip">
+                        <button class="btn-secondary" id="copyBtn" onclick="copyCode()" disabled>📋 Copy Code</button>
+                        <span class="tooltiptext">⚠️ May not work on all browsers or HTTPS sites. Use "Select All" if this fails.</span>
+                    </div>
                 </div>
             </div>
 
@@ -399,8 +466,9 @@
                 <div class="instructions">
                     <h3>How to copy with colors:</h3>
                     <ul>
-                        <li><strong>Method 1:</strong> Click the "Copy Highlighted Code" button above, then paste into Word/PowerPoint</li>
-                        <li><strong>Method 2:</strong> Select all the highlighted code below (Ctrl+A / Cmd+A), copy (Ctrl+C / Cmd+C), and paste into your document</li>
+                        <li><strong>Method 1:</strong> Click "📋 Copy Code" button above for automatic copying, then paste into Word/PowerPoint</li>
+                        <li><strong>Method 2:</strong> Click "🎯 Select All" button to select the code, then use Ctrl+C / Cmd+C to copy manually</li>
+                        <li><strong>Method 3:</strong> Select all the highlighted code below manually (Ctrl+A / Cmd+A), copy (Ctrl+C / Cmd+C), and paste into your document</li>
                         <li>The syntax colors will be preserved in Word, PowerPoint, and other rich text editors!</li>
                         <li>💡 <strong>Tip:</strong> Switch languages or themes anytime to re-highlight your code!</li>
                     </ul>
@@ -510,6 +578,7 @@
             const outputSection = document.getElementById('outputSection');
             const highlightedCode = document.getElementById('highlightedCode');
             const copyBtn = document.getElementById('copyBtn');
+            const selectBtn = document.getElementById('selectBtn');
             const languageSelect = document.getElementById('languageSelect');
             const selectedLanguage = languageSelect.value;
 
@@ -533,9 +602,10 @@
                 // Wrap in pre and code tags with inline styles for better copying
                 highlightedCode.innerHTML = `<pre class="language-${language}"><code class="language-${language}">${highlighted}</code></pre>`;
 
-                // Show output section and enable copy button
+                // Show output section and enable buttons
                 outputSection.classList.add('active');
                 copyBtn.disabled = false;
+                selectBtn.disabled = false;
 
                 // Scroll to output
                 outputSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -589,8 +659,29 @@
             }
         }
 
-        function showNotification() {
+        function selectCode() {
+            const highlightedDiv = document.getElementById('highlightedCode');
+            const pre = highlightedDiv.querySelector('pre');
+            
+            try {
+                // Create a range and selection
+                const range = document.createRange();
+                range.selectNodeContents(pre);
+                const selection = window.getSelection();
+                selection.removeAllRanges();
+                selection.addRange(range);
+
+                // Show notification
+                showNotification('🎯 Code selected! Use Ctrl+C / Cmd+C to copy.');
+                
+            } catch (err) {
+                alert('Selection failed. Please select the code manually.');
+            }
+        }
+
+        function showNotification(message = '✓ Code copied to clipboard!') {
             const notification = document.getElementById('notification');
+            notification.textContent = message;
             notification.classList.add('show');
             setTimeout(() => {
                 notification.classList.remove('show');
