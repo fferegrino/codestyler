@@ -4,9 +4,10 @@ A simple web application to syntax highlight Python code and copy it with colors
 
 ## Features
 
-- 🎨 Beautiful syntax highlighting for Python code
+- 🎨 Beautiful syntax highlighting for Python code with multiple themes
+- 🎭 8 different color themes to choose from (dark and light options)
 - 📋 One-click copy with colors preserved
-- 💾 Works offline (uses CDN but can be saved locally)
+- 💾 Remembers your preferred theme
 - 🎯 Simple and intuitive interface
 - ✨ Modern, responsive design
 
@@ -14,15 +15,37 @@ A simple web application to syntax highlight Python code and copy it with colors
 
 1. **Open the application**: Simply open `index.html` in your web browser (Chrome, Firefox, Safari, or Edge)
 
-2. **Paste your Python code**: Enter or paste your Python code into the text area
+2. **Choose a theme** (optional): Select your preferred color theme from the dropdown menu at the top
 
-3. **Highlight the code**: Click the "✨ Highlight Code" button (or press Ctrl+Enter / Cmd+Enter)
+3. **Paste your Python code**: Enter or paste your Python code into the text area
 
-4. **Copy the highlighted code**: 
+4. **Highlight the code**: Click the "✨ Highlight Code" button (or press Ctrl+Enter / Cmd+Enter)
+
+5. **Copy the highlighted code**: 
    - Click the "📋 Copy Highlighted Code" button, OR
    - Select all the highlighted code and copy it manually (Ctrl+C / Cmd+C)
 
-5. **Paste into Word/PowerPoint**: The syntax colors will be preserved!
+6. **Paste into Word/PowerPoint**: The syntax colors will be preserved!
+
+## Available Themes
+
+The app includes 8 different color themes:
+
+**Dark Themes:**
+- Tomorrow Night (default) - Modern dark theme with vibrant colors
+- Okaidia - Sublime Text inspired dark theme
+- Twilight - Calm purple-based dark theme
+- Dark - Classic dark theme
+
+**Light Themes:**
+- Coy - Clean light theme with subtle colors
+- Solarized Light - Popular light theme with warm tones
+- Default - Classic Prism light theme
+
+**Special:**
+- Funky - Colorful and bold theme
+
+Your theme preference is automatically saved and will be remembered the next time you visit!
 
 ## Technical Details
 
