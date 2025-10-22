@@ -3,8 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>highlighted.codes - Syntax Highlighter</title>
+    <title>highlighted.codes - Free Syntax Highlighter for 20+ Programming Languages</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Free online syntax highlighter for 20+ programming languages. Copy code with colors preserved for Word, PowerPoint, and other rich text editors. Works offline, no registration required.">
+    <meta name="keywords" content="syntax highlighter, code formatter, programming languages, copy code colors, Word PowerPoint, Python, JavaScript, TypeScript, Java, C++, HTML, CSS, JSON, YAML, free online tool">
+    <meta name="author" content="highlighted.codes">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    <meta name="revisit-after" content="7 days">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://highlighted.codes/">
+    <meta property="og:title" content="highlighted.codes - Free Syntax Highlighter">
+    <meta property="og:description" content="Free online syntax highlighter for 20+ programming languages. Copy code with colors preserved for Word, PowerPoint, and other rich text editors.">
+    <meta property="og:image" content="https://highlighted.codes/og-image.png">
+    <meta property="og:site_name" content="highlighted.codes">
+    <meta property="og:locale" content="en_US">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://highlighted.codes/">
+    <meta property="twitter:title" content="highlighted.codes - Free Syntax Highlighter">
+    <meta property="twitter:description" content="Free online syntax highlighter for 20+ programming languages. Copy code with colors preserved for Word, PowerPoint, and other rich text editors.">
+    <meta property="twitter:image" content="https://highlighted.codes/og-image.png">
+    
+    <!-- Additional SEO -->
+    <meta name="theme-color" content="#667eea">
+    <meta name="msapplication-TileColor" content="#667eea">
+    <meta name="application-name" content="highlighted.codes">
+    <meta name="apple-mobile-web-app-title" content="highlighted.codes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://highlighted.codes/">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="./favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
+    <link rel="manifest" href="./site.webmanifest">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" as="script">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" as="style">
+    
     <link rel="stylesheet" id="prismTheme" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "highlighted.codes",
+        "description": "Free online syntax highlighter for 20+ programming languages. Copy code with colors preserved for Word, PowerPoint, and other rich text editors.",
+        "url": "https://highlighted.codes/",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "browserRequirements": "Requires JavaScript. Requires HTML5.",
+        "softwareVersion": "1.0",
+        "datePublished": "2024-01-01",
+        "dateModified": "2024-12-19",
+        "author": {
+            "@type": "Organization",
+            "name": "highlighted.codes"
+        },
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "featureList": [
+            "Syntax highlighting for 20+ programming languages",
+            "Copy code with colors preserved",
+            "8 different color themes",
+            "Works offline",
+            "No registration required",
+            "Cross-browser compatibility"
+        ]
+    }
+    </script>
+    
     <style>
         * {
             margin: 0;
@@ -299,6 +381,13 @@
             color: #333;
         }
 
+        .section-description {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
         .footer {
             background: rgba(255, 255, 255, 0.1);
             -webkit-backdrop-filter: blur(10px);
@@ -395,8 +484,13 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>highlighted.codes</h1>
+    <header>
+        <div class="container">
+            <h1>highlighted.codes</h1>
+        </div>
+    </header>
+    
+    <main class="container">
         
         <div class="card">
             <div class="input-section">
@@ -446,6 +540,7 @@
                 </div>
                 
                 <h2 class="section-title">Paste Your Code</h2>
+                <p class="section-description">Support for Python, JavaScript, TypeScript, Java, C#, C++, PHP, Ruby, Go, Rust, Swift, Kotlin, SQL, Bash, PowerShell, R, MATLAB, HTML, CSS, JSON, YAML, and Markdown.</p>
                 <textarea id="codeInput" placeholder="# Paste your code here..."></textarea>
                 <div class="button-group">
                     <button class="btn-primary" onclick="highlightCode()">✨ Highlight Code</button>
@@ -507,7 +602,7 @@
                 <p>&copy; 2025 highlighted.codes - Made with AI for developers</p>
             </div>
         </footer>
-    </div>
+    </main>
 
     <div class="notification" id="notification">
         ✓ Code copied to clipboard!
